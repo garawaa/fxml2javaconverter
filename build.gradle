@@ -1,0 +1,98 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.guardsquare:proguard-gradle:7.1.0'
+    }
+}
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+group 'io.github.garawaa'
+version '1.0'
+mainClassName = 'Main'
+repositories {
+    mavenCentral()
+}
+application {
+    // Define the main class for the application.
+    mainClassName = "$mainClassName"
+}
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+dependencies {
+    implementation fileTree('libs') { include '*.jar' }
+}
+
+test {
+    useJUnitPlatform()
+}
+shadowJar {
+    manifest {
+        attributes 'Main-Class': "$mainClassName"
+    }
+}
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java', 'src/main/resources'
+        }
+    }
+}
+jar{
+    manifest {
+        attributes(
+                "Main-Class": "$mainClassName",
+        )
+
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn ('dependencies')
+}
+import proguard.gradle.ProGuardTask
+task ('proguard', type: ProGuardTask) {
+    dependsOn shadowJar
+    //def archivePath = shadowJar.archiveFile.get().asFile.path
+    //configuration 'configuration.pro'
+
+    verbose
+    // Specify the input jars, output jars, and library jars.
+    injars  shadowJar
+    outjars "$buildDir/libs/${project.name}-${project.version}-all-obf.jar"
+    //outjars archivePath.replace(".jar", "-obf.jar")
+
+    // Automatically handle the Java version of this build.
+    if (System.getProperty('java.version').startsWith('1.')) {
+        // Before Java 9, the runtime classes were packaged in a single jar file.
+        libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+        libraryjars "${System.getProperty('java.home')}/lib/ext/jfxrt.jar"
+    } else {
+        // As of Java 9, the runtime classes are packaged in modular jmod files.
+        libraryjars "${System.getProperty('java.home')}/jmods/java.base.jmod", jarfilter: '!**.jar', filter: '!module-info.class'
+        //libraryjars "${System.getProperty('java.home')}/jmods/....."
+    }
+
+    renamesourcefileattribute 'SourceFile'
+    keepattributes 'SourceFile,LineNumberTable'
+
+    // Preserve all annotations.
+    keepattributes '*Annotation*'
+
+    // Preserve all public applications.
+    keepclasseswithmembers 'public class * { \
+        public static void main(java.lang.String[]); \
+    }'
+
+
+}
+

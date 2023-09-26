@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="IntelliGuard" name="Obfuscation">
+      <configuration>
+        <option name="yGuardJar" value="C:\Users\garawaa\Documents\yguard.jar" />
+        <option name="inFile" value="D:\dev\javafx\fxml2javaconverter\output.jar" />
+        <option name="outFile" value="D:\dev\javafx\fxml2javaconverter\output-yg.jar" />
+        <option name="mainclass" value="Main" />
+        <option name="namingScheme" value="best" />
+        <option name="jarConfig">
+          <JarConfig>
+            <option name="jarEntries">
+              <list>
+                <option value="D:\dev\javafx\fxml2javaconverter\build\classes\java\main" />
+                <option value="D:\dev\javafx\fxml2javaconverter\build\libs\fxml2javaconverter-1.0\com" />
+              </list>
+            </option>
+          </JarConfig>
+        </option>
+      </configuration>
+    </facet>
+  </component>
+</module>
