@@ -128,6 +128,8 @@ public class MainClass {
     this.mainBuilder.append(createClass());
     this.mainBuilder.append(methodList.toString("    "));
     this.mainBuilder.append("}\n");
+    this.mainBuilder.append("//Warning! Don't modify this class manually.\n");
+
     return this.mainBuilder.toString();
   }
 
