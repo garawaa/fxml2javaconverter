@@ -1,5 +1,5 @@
 # fxml2javaconverter
-Simple fxml to java code converter
+Simple fxml to java code converter. You can drag a fxml file from file explorer to input text field or browse a fxml file and configure some output path, class name, package name as you needed.
 # Main window screenshot
 ![Main](main.png)
 # Intellij external tool setting
