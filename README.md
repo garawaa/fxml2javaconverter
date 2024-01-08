@@ -11,3 +11,5 @@ java -jar fxml2java.jar [path/to/fxmlfilename]
 After adding external tool setting you can convert a fxml file to java code from context menu in intellij ide. You can add this tools to other IDEs as external command similarly.
 # Usage
 After generating a java base class, just create a java class by extending generated base class and use it as normal ui class. For example see it's source code.
+# Build source code
+It is gradle based project. Just open this project in your favorite java IDE like vscode, eclipse, netbeans, intellij idea and run application task. If you want to use proguard then just run proguard task. I used intellij IDE and java8 for development.
